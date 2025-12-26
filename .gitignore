@@ -1,0 +1,20 @@
+# Build/cache artifacts
+/gcm.cache/
+*.gcm
+*.pcm
+*.ifc
+
+# Compiled outputs
+*.exe
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+
+# Tooling
+.vscode/ipch/
+
+# OS
+.DS_Store
+Thumbs.db

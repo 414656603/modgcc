@@ -1,0 +1,94 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "清理 gcm.cache(可选)",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "if exist \"${workspaceFolder}\\gcm.cache\" rmdir /s /q \"${workspaceFolder}\\gcm.cache\""
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "预编译 <iostream>",
+            "command": "D:\\C++\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-x",
+                "c++-system-header",
+                "iostream"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "预编译 <format>",
+            "command": "D:\\C++\\mingw64\\bin\\g++.exe",
+            "dependsOn": ["预编译 <iostream>"],
+            "dependsOrder": "sequence",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-x",
+                "c++-system-header",
+                "format"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "type": "process",
+            "label": "拷贝 std gcm 到共享目录(显示返回码)",
+            "command": "powershell.exe",
+            "dependsOn": ["预编译 <format>"],
+            "dependsOrder": "sequence",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-Command",
+                "$src='${workspaceFolder}\\gcm.cache\\D-'; $dst='D:\\C++\\gcc_prebuild_stdlib_gcm\\15_2_0\\D-'; Write-Host ('[info] SRC=' + $src); Write-Host ('[info] DST=' + $dst); if(-not (Test-Path -LiteralPath $src)) { Write-Host ('[error] stdlib cache not found: ' + $src); exit 1 }; New-Item -ItemType Directory -Force -Path $dst | Out-Null; & xcopy /E /I /Y ($src + '\\*') $dst; $rc=$LASTEXITCODE; Write-Host ('[ok] xcopy exit=' + $rc); exit $rc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "编译 C++20 模块项目",
+            "command": "D:\\C++\\mingw64\\bin\\g++.exe",
+            "dependsOn": ["预编译 <format>"],
+            "dependsOrder": "sequence",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-g",
+                "-fdiagnostics-color=always",
+                "${workspaceFolder}\\mymodules\\employee.cppm",
+                "${workspaceFolder}\\src\\main.cpp",
+                "-o",
+                "${workspaceFolder}\\main.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "直接编译，不依赖 module-map.txt"
+        }
+    ]
+}
