@@ -1,0 +1,4 @@
+$root .
+employee gcm.cache/employee.gcm
+D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/iostream ../../gcc_prebuild_stdlib_gcm/15_2_0/D-/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/iostream.gcm
+D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/format ../../gcc_prebuild_stdlib_gcm/15_2_0/D-/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/format.gcm
