@@ -1,0 +1,41 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "ninja-gcc",
+      "displayName": "Ninja + MinGW GCC",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/ninja-gcc",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_COMPILER": "D:/C++/mingw64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "D:/C++/mingw64/bin/g++.exe",
+        "CMAKE_MAKE_PROGRAM": "D:/C++/ninja/ninja.exe"
+      }
+    },
+    {
+      "name": "ninja-gcc-precompile-stdlib",
+      "displayName": "Ninja + MinGW GCC (precompile stdlib CMI)",
+      "inherits": "ninja-gcc",
+      "binaryDir": "${sourceDir}/build/ninja-gcc-precompile-stdlib",
+      "cacheVariables": {
+        "MODGCC_PRECOMPILE_STDLIB": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "ninja-gcc",
+      "configurePreset": "ninja-gcc"
+    },
+    {
+      "name": "ninja-gcc-precompile-stdlib",
+      "configurePreset": "ninja-gcc-precompile-stdlib"
+    }
+  ]
+}

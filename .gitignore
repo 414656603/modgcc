@@ -1,4 +1,5 @@
 # Build/cache artifacts
+/Build/
 /gcm.cache/
 *.gcm
 *.pcm

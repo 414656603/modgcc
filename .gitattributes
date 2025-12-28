@@ -1,0 +1,2 @@
+# Enforce LF for GCC module mapper file
+/module-map text eol=lf
