@@ -76,7 +76,7 @@
                 "-g",
                 "-fdiagnostics-color=always",
                 "-flang-info-module-cmi",
-                "-fmodule-mapper=module-map",
+                "-fmodule-mapper=|@g++-mapper-server -r D:\\C++\\gcc_prebuild_stdlib_gcm\\15_2_0 -f -n",
                 "${workspaceFolder}\\mymodules\\employee.cppm",
                 "${workspaceFolder}\\src\\main.cpp",
                 "-o",
