@@ -2,6 +2,109 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "type": "process",
+            "label": "清理 CMake 构建产物(还原工程本来面目)",
+            "command": "powershell.exe",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-Command",
+                "$root='${workspaceFolder}';",
+                "$build=Join-Path $root 'build';",
+                "$gcm=Join-Path $root 'gcm.cache';",
+                "$exeRoot=Join-Path $root 'main.exe';",
+                "$cc=Join-Path $root 'compile_commands.json';",
+                "Write-Host ('[info] remove build dir: ' + $build);",
+                "if(Test-Path -LiteralPath $build){ Remove-Item -LiteralPath $build -Recurse -Force };",
+                "Write-Host ('[info] remove module cache: ' + $gcm);",
+                "if(Test-Path -LiteralPath $gcm){ Remove-Item -LiteralPath $gcm -Recurse -Force };",
+                "Write-Host ('[info] remove exe (repo root, if any): ' + $exeRoot);",
+                "if(Test-Path -LiteralPath $exeRoot){ Remove-Item -LiteralPath $exeRoot -Force };",
+                "Write-Host ('[info] remove compile_commands: ' + $cc);",
+                "if(Test-Path -LiteralPath $cc){ Remove-Item -LiteralPath $cc -Force };",
+                "Write-Host '[ok] cmake artifacts cleaned.'"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "CMake: configure (ninja-gcc)",
+            "command": "D:\\C++\\CMake\\bin\\cmake.exe",
+            "args": [
+                "--preset",
+                "ninja-gcc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "CMake: build (ninja-gcc)",
+            "command": "D:\\C++\\CMake\\bin\\cmake.exe",
+            "dependsOn": [
+                "CMake: configure (ninja-gcc)"
+            ],
+            "dependsOrder": "sequence",
+            "args": [
+                "--build",
+                "--preset",
+                "ninja-gcc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "CMake: configure (ninja-gcc-precompile-stdlib)",
+            "command": "D:\\C++\\CMake\\bin\\cmake.exe",
+            "args": [
+                "--preset",
+                "ninja-gcc-precompile-stdlib"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "CMake: build (ninja-gcc-precompile-stdlib)",
+            "command": "D:\\C++\\CMake\\bin\\cmake.exe",
+            "dependsOn": [
+                "CMake: configure (ninja-gcc-precompile-stdlib)"
+            ],
+            "dependsOrder": "sequence",
+            "args": [
+                "--build",
+                "--preset",
+                "ninja-gcc-precompile-stdlib"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
             "type": "shell",
             "label": "清理 gcm.cache(可选)",
             "command": "cmd.exe",
@@ -90,7 +193,7 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "直接编译，不依赖 module-map.txt"
+            "detail": "直接编译，依赖g++-mapper-server.exe"
         }
     ]
 }

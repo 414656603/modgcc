@@ -1,0 +1,5 @@
+{
+  "cmake.cmakePath": "D:/C++/CMake/bin/cmake.exe",
+  "cmake.useCMakePresets": "always",
+  "cmake.configureOnOpen": true
+}

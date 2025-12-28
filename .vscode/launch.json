@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "g++ mod nocmake",  // 名字随便取
+            "name": "gdb: main (direct g++ task, repo root)",
             "type": "cppdbg",
             "request": "launch",
             // program 指定调试那个可执行文件，需要绝对路径
@@ -32,6 +32,58 @@
             ],
             "preLaunchTask": "编译 C++20 模块项目",  // 在执行lanuch.json之前要做的任务
             "miDebuggerPath": "D:/C++/mingw64/bin/gdb.exe"        // 指定调试工具
+        },
+        {
+            "name": "gdb: main (CMake preset: ninja-gcc)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\build\\ninja-gcc\\main.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "CMake: build (ninja-gcc)",
+            "miDebuggerPath": "D:/C++/mingw64/bin/gdb.exe"
+        },
+        {
+            "name": "gdb: main (CMake preset: ninja-gcc-precompile-stdlib)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\build\\ninja-gcc-precompile-stdlib\\main.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "CMake: build (ninja-gcc-precompile-stdlib)",
+            "miDebuggerPath": "D:/C++/mingw64/bin/gdb.exe"
         }
     ]
 }
