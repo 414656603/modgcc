@@ -1,12 +1,12 @@
 import <iostream>;
 import <format>;
-// import employee;
+import employee;
 
 using namespace std;
 
 int main()
 {
-/*     //Create and populate an employee.
+    //Create and populate an employee.
     Employee anEmployee;
     anEmployee.firstInitial='J';
     anEmployee.lastInitial='D';
@@ -16,8 +16,8 @@ int main()
     cout << format("Employee:{}{}",anEmployee.firstInitial,anEmployee.lastInitial) << endl;
     cout << format("Number:{}",anEmployee.employeeNumber) << endl;
     cout << format("Salary:${}",anEmployee.salary) << endl;
-    cin.get() ;
-    return 0; */
+    
+ 
   
     enum class Mode { Default, Custom, Standard };
     int value { 42 };
@@ -35,4 +35,7 @@ int main()
             cout << format("Standard mode: value={}\n", value);
         break;
     }
+
+    cin.get() ;
+    return 0;
 }

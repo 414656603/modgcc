@@ -1,65 +1,21 @@
 
-set(SRC_ROOT "${CMAKE_SOURCE_DIR}")
-set(GXX "${CMAKE_CXX_COMPILER}")
+set(MAIN_SRC "${CMAKE_SOURCE_DIR}/src/main.cpp")
 
-set(MODULE_MAP "${SRC_ROOT}/module-map")
-set(EMPLOYEE_SRC "${SRC_ROOT}/mymodules/employee.cppm")
-set(MAIN_SRC "${SRC_ROOT}/src/main.cpp")
-set(MAIN_EXE "${CMAKE_BINARY_DIR}/main.exe")
+add_executable(main_exe "${MAIN_SRC}" "${MODGCC_EMPLOYEE_OBJ}")
+set_source_files_properties("${MODGCC_EMPLOYEE_OBJ}" PROPERTIES GENERATED TRUE)
 
-# 是否在构建时【自动】预编译标准库 header-unit（例如 <iostream>/<format>）。
-#
-# 默认 OFF：
-# - 不在本工程根目录生成 std header-unit 的 CMI（不会创建/重建 gcm.cache/D-）。
-# - 直接依赖 module-map 里配置的【共享 CMI 目录】下的 .gcm 文件（更快、更干净）。
-#
-# 何时需要 ON：
-# - 你更新了 GCC/stdlib，或者共享 CMI 目录缺少所需的 .gcm（如 iostream.gcm/format.gcm）。
-# - 想从“干净环境”一键生成并同步共享 CMI（本工程会先生成到 gcm.cache/D-，再拷贝到共享目录）。
-#
-# 如何开启（命令行）：
-# - 配置阶段追加：-DMODGCC_PRECOMPILE_STDLIB=ON
-#   例如：cmake --preset ninja-gcc -DMODGCC_PRECOMPILE_STDLIB=ON
-option(MODGCC_PRECOMPILE_STDLIB "Precompile std header-units (iostream/format) into gcm.cache and sync them to the shared CMI directory" OFF)
+# 关闭 CMake 自带的（实验性）modules 扫描逻辑：它会额外注入一个 -fmodule-mapper=*.modmap，
+# 从而覆盖我们手写的 module-map，导致 import <iostream>/<format> 找不到对应 header-unit CMI。
+set_target_properties(main_exe PROPERTIES CXX_SCAN_FOR_MODULES OFF)
 
-set(STD_DEPS "")
-
-if(MODGCC_PRECOMPILE_STDLIB)
-	set(GCM_CACHE_DIR "${SRC_ROOT}/gcm.cache")
-	set(GCM_CACHE_STD_DIR "${GCM_CACHE_DIR}/D-")
-	set(SHARED_STD_DIR "D:/C++/gcc_prebuild_stdlib_gcm/15_2_0/D-")
-	set(STD_STAMP "${CMAKE_BINARY_DIR}/.stamp-std")
-
-	add_custom_command(
-		OUTPUT "${STD_STAMP}"
-		COMMAND "${CMAKE_COMMAND}" -E rm -rf "${GCM_CACHE_DIR}"
-		COMMAND "${GXX}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header iostream
-		COMMAND "${GXX}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header format
-		COMMAND "${CMAKE_COMMAND}" -E make_directory "${SHARED_STD_DIR}"
-		COMMAND "${CMAKE_COMMAND}" -E copy_directory "${GCM_CACHE_STD_DIR}" "${SHARED_STD_DIR}"
-		COMMAND "${CMAKE_COMMAND}" -E touch "${STD_STAMP}"
-		WORKING_DIRECTORY "${SRC_ROOT}"
-		VERBATIM
-	)
-
-	set(STD_DEPS "${STD_STAMP}")
-endif()
-
-add_custom_command(
-	OUTPUT "${MAIN_EXE}"
-	COMMAND "${GXX}"
-		-std=c++20
-		-fmodules-ts
-		-g
-		-fdiagnostics-color=always
-		-flang-info-module-cmi
-		-fmodule-mapper=module-map
-		"${EMPLOYEE_SRC}"
-		"${MAIN_SRC}"
-		-o "${MAIN_EXE}"
-	DEPENDS ${STD_DEPS} "${MODULE_MAP}" "${EMPLOYEE_SRC}" "${MAIN_SRC}"
-	WORKING_DIRECTORY "${SRC_ROOT}"
-	VERBATIM
+target_compile_options(main_exe PRIVATE
+	${MODGCC_COMMON_COMPILE_FLAGS}
+	${MODGCC_WARNING_FLAGS}
 )
 
-add_custom_target(main_exe ALL DEPENDS "${MAIN_EXE}")
+# 关键：强制 main.cpp 的编译在 employee 的 CMI 生成之后执行（避免 Ninja 并行导致 import 找不到 CMI）。
+set_source_files_properties("${MAIN_SRC}" PROPERTIES
+	OBJECT_DEPENDS "${MODGCC_EMPLOYEE_CMI};${MODGCC_MODULE_MAP_FILE}"
+)
+
+add_dependencies(main_exe employee_module)
