@@ -1,0 +1,39 @@
+为当前工程编写.md文件，其中要包括使用tasks里的各任务用法和含义，以及假如不使用tasks里的任务而是使用等价的命令执行相应任务的方法
+
+//克隆远端仓库的 map_cmake 分支到本地：
+git clone -b map_cmake --single-branch git@github.com:414656603/modgcc.git
+
+注意：这里使用了 --single-branch，Git 会把 remote "origin" 的 fetch refspec 限制为只抓取 map_cmake。
+因此即便远端存在 map_cmake_work1，本地也不会自动生成/更新 remote-tracking 分支 origin/map_cmake_work1。
+这会直接导致下面命令报错：
+git branch --set-upstream-to=origin/map_cmake_work1
+（因为本地并不存在 refs/remotes/origin/map_cmake_work1）
+
+如果你想让本地 map_cmake_work1 跟踪远端同名分支，通常直接执行：
+git push -u origin map_cmake_work1（创建/更新远端 map_cmake_work1 并设置 upstream）
+
+如果远端已经存在同名分支，也可以：
+git branch --set-upstream-to=origin/map_cmake_work1
+
+验证远端分支是否存在，可以使用：
+git ls-remote --heads origin map_cmake_work1 能看到 refs/heads/map_cmake_work1（远端存在）
+
+但是执行
+git branch -r 只有 origin/map_cmake（本地没抓到 origin/map_cmake_work1）
+
+
+
+
+怎么修复（任选其一）
+
+先抓取该远端分支“并创建对应的 remote-tracking 分支”，再设置 upstream（推荐）
+git fetch origin map_cmake_work1:refs/remotes/origin/map_cmake_work1
+git branch --set-upstream-to=origin/map_cmake_work1
+
+或者把 origin 的 fetch refspec 改回“抓取所有分支”，再全量 fetch（适合长期使用多个分支）
+git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+git fetch --prune origin
+git branch --set-upstream-to=origin/map_cmake_work1
+
+补充：在 PowerShell 里写 @{u} 需要加引号，否则会被当成哈希语法解析：
+git rev-parse --abbrev-ref --symbolic-full-name '@{u}'
