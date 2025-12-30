@@ -20,6 +20,7 @@
                 //"-fprebuilt-module-path=${workspaceFolder}",
                 //"-fmodules-cache-path=${workspaceFolder}"
             ],
+            //这句的意思是：让VSCode使用Makefile Tools扩展来管理此配置
             "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],

@@ -1,39 +1,148 @@
-为当前工程编写.md文件，其中要包括使用tasks里的各任务用法和含义，以及假如不使用tasks里的任务而是使用等价的命令执行相应任务的方法
-
-//克隆远端仓库的 map_cmake 分支到本地：
-git clone -b map_cmake --single-branch git@github.com:414656603/modgcc.git
-
-注意：这里使用了 --single-branch，Git 会把 remote "origin" 的 fetch refspec 限制为只抓取 map_cmake。
-因此即便远端存在 map_cmake_work1，本地也不会自动生成/更新 remote-tracking 分支 origin/map_cmake_work1。
-这会直接导致下面命令报错：
-git branch --set-upstream-to=origin/map_cmake_work1
-（因为本地并不存在 refs/remotes/origin/map_cmake_work1）
-
-如果你想让本地 map_cmake_work1 跟踪远端同名分支，通常直接执行：
-git push -u origin map_cmake_work1（创建/更新远端 map_cmake_work1 并设置 upstream）
-
-如果远端已经存在同名分支，也可以：
-git branch --set-upstream-to=origin/map_cmake_work1
-
-验证远端分支是否存在，可以使用：
-git ls-remote --heads origin map_cmake_work1 能看到 refs/heads/map_cmake_work1（远端存在）
-
-但是执行
-git branch -r 只有 origin/map_cmake（本地没抓到 origin/map_cmake_work1）
+################################################################################
+# gitcmd - modgcc 分支/worktree 备忘 (PowerShell)
+#
+# 目录约定（本机）：
+#   主目录（主 worktree / 主仓库）：
+#     D:\C++\MyPJ\modgcc_branch_maprelcmake_workn
+#
+# 目标约定：
+#   - 远端基准分支：map_cmake_realcmake
+#   - 本地/远端主分支：map_cmake_realcmake_workn
+#   - 其他分支用 worktree 放在主目录下：.\wt_<branch>
+#
+# 注意：以下命令均为“可复制执行”的备忘。远端 URL 已按当前仓库填写。
+################################################################################
 
 
+################################################################################
+# A. 从“空目录”开始：克隆远端 map_cmake_realcmake 到当前目录
+################################################################################
+
+# 1) 进入你准备作为仓库根目录的文件夹（该文件夹最好是空的）
+Set-Location "D:\C++\MyPJ\modgcc_branch_maprelcmake_workn"
+
+# 2) 直接克隆到当前目录（注意最后的点 . 表示“当前目录”）
+#    --branch 指定初始检出的分支
+#    --single-branch 可选：只拉取该分支的历史（更轻量）
+git clone git@github.com:414656603/modgcc --branch map_cmake_realcmake --single-branch .
+
+# 3) 检查当前状态
+git status
+git branch --show-current
 
 
-怎么修复（任选其一）
+################################################################################
+# B. 基于 map_cmake_realcmake 创建主工作分支 map_cmake_realcmake_workn
+################################################################################
 
-先抓取该远端分支“并创建对应的 remote-tracking 分支”，再设置 upstream（推荐）
-git fetch origin map_cmake_work1:refs/remotes/origin/map_cmake_work1
-git branch --set-upstream-to=origin/map_cmake_work1
+# 1) 创建并切到你的主工作分支
+git switch -c map_cmake_realcmake_workn
 
-或者把 origin 的 fetch refspec 改回“抓取所有分支”，再全量 fetch（适合长期使用多个分支）
-git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+# 2) 推到远端并设置 upstream（以后 git pull/push 不用再写远端分支名）
+git push -u origin map_cmake_realcmake_workn
+
+
+################################################################################
+# C. worktree：从主分支派生其他分支（示例 featureB）
+################################################################################
+
+# 0) 先更新远端信息（建议每次操作前执行）
 git fetch --prune origin
-git branch --set-upstream-to=origin/map_cmake_work1
 
-补充：在 PowerShell 里写 @{u} 需要加引号，否则会被当成哈希语法解析：
-git rev-parse --abbrev-ref --symbolic-full-name '@{u}'
+# 1) 查看当前 worktree 列表
+git worktree list
+
+# 2) 【错误示例】用 .. 会跑到父目录（仅记录：不要这么用）
+#    这会把 worktree 建到 D:\C++\MyPJ\wt_featureB
+git worktree add "..\wt_featureB" -b featureB origin/map_cmake_realcmake_workn
+
+# 3) 检查错误 worktree 是否有改动（无输出表示干净）
+git -C "D:\C++\MyPJ\wt_featureB" status --porcelain=v1 -uno
+git -C "D:\C++\MyPJ\wt_featureB" branch --show-current
+
+# 4) 移除错误位置的 worktree（并清理目录）
+git worktree remove "D:\C++\MyPJ\wt_featureB"
+if (Test-Path "D:\C++\MyPJ\wt_featureB") { Remove-Item -Recurse -Force "D:\C++\MyPJ\wt_featureB" }
+
+# 5) 【正确示例】在当前目录下创建 worktree：用 .\wt_featureB
+#    注意：下面这条是“检出已有分支 featureB 到指定目录”
+git worktree add ".\wt_featureB" featureB
+
+# 6) 再次确认 worktree 列表
+git worktree list
+
+
+################################################################################
+# D. worktree 的 .git 形态说明（备忘）
+################################################################################
+
+# 主目录：.git 是一个目录（真正的仓库数据在这里）
+# 子 worktree：各自也会有 .git，但通常是一个小文件，内容形如：
+#   gitdir: <主目录>/.git/worktrees/<worktree名>
+
+
+################################################################################
+# E. 让根目录 git status 不被 wt_* 干扰（本地忽略，不会提交到仓库）
+################################################################################
+
+# 将 wt_*/ 写入 .git/info/exclude
+$excludePath = ".git/info/exclude"
+if (!(Test-Path $excludePath)) { New-Item -ItemType File -Path $excludePath -Force | Out-Null }
+$content = Get-Content $excludePath -ErrorAction SilentlyContinue
+if ($content -notcontains "wt_*/") {
+	Add-Content -Path $excludePath -Value ""
+	Add-Content -Path $excludePath -Value "# local worktree folders"
+	Add-Content -Path $excludePath -Value "wt_*/"
+}
+
+
+################################################################################
+# F. 以后常用模板（按当前目录内放 worktree 的习惯）
+################################################################################
+
+# 1) 从主分支 map_cmake_realcmake_workn 新建分支 + worktree（推荐）
+#    例：创建 featureC，并放在 .\wt_featureC
+git fetch --prune origin
+git worktree add .\wt_featureC -b featureC map_cmake_realcmake_workn
+
+# （可选）推送并建立 upstream
+git -C .\wt_featureC push -u origin featureC
+
+
+# 2) 进入某个 worktree 目录操作
+Set-Location .\wt_featureC
+git status
+git pull
+
+
+# 3) 查看所有 worktree
+Set-Location "D:\C++\MyPJ\modgcc_branch_maprelcmake_workn"
+git worktree list
+
+
+# 4) 移除某个 worktree（不删除分支）
+git worktree remove .\wt_featureC
+git worktree prune
+
+
+# 5) 移除 worktree + 删除分支（谨慎）
+git worktree remove .\wt_featureC
+git branch -D featureC
+
+# （可选）删除远端分支
+git push origin --delete featureC
+
+
+################################################################################
+# G. 诊断/确认用命令（备忘）
+################################################################################
+
+# 查看分支与跟踪关系
+git branch -vv
+
+# 查看仓库顶层目录
+git rev-parse --show-toplevel
+
+# 查看远端地址
+git remote -v
+
