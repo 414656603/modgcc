@@ -22,6 +22,12 @@
   - `module-map` 里把 `<iostream>/<format>` 的 `.gcm` 映射到该共享目录。
 - 本工程自己的模块缓存：仓库根目录 `gcm.cache`（例如 `employee.gcm`）。
 
+## TODO / Roadmap
+
+- [ ] 将 `demo` 库以动态库形式输出（Windows: `.dll` + import lib），供其它工程直接链接复用。
+- [ ] 完善对外发布所需的 CMake 安装/导出（`install()` + 导出 targets），支持 `find_package()` 引用。
+- [ ] 为 DLL 增加导出宏（如 `DEMO_API`），并明确 ABI/编译器版本约束。
+
 ## 用 VS Code Tasks 构建/清理
 
 打开 VS Code：`终端(Terminal) -> 运行任务(Run Task...)`，选择下列任务。

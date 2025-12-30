@@ -32,6 +32,8 @@ set(MODGCC_COMMON_COMPILE_FLAGS
 	-std=c++20
 	-fmodules-ts
 	-g
+	-finput-charset=UTF-8
+	-fexec-charset=UTF-8
 	-fdiagnostics-color=always
 	-flang-info-module-cmi
 	-fmodule-mapper=${MODGCC_MODULE_MAPPER_ARG}
@@ -39,7 +41,7 @@ set(MODGCC_COMMON_COMPILE_FLAGS
 
 set(MODGCC_WARNING_FLAGS
 	-Wall
-	-Wextra
+	#-Wextra
 	-Wimplicit-fallthrough=3
 )
 
@@ -75,3 +77,4 @@ endif()
 
 add_subdirectory(mymodules)
 add_subdirectory(src)
+add_subdirectory(examples)
