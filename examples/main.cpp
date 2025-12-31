@@ -1,5 +1,7 @@
 #include <demo/test_switch.h>
 #include <demo/test_ternary_operator.h>
+#include <demo/test_ThreewayComparisonOperator.h>
+#include "demo/test_FunctionInvocation.h"
 #include "console_utf8.h"
 
 import <iostream>;
@@ -26,6 +28,16 @@ int main()
 
     demo::RunTestSwitch();
     demo::RunTernaryOperatorDemo(5);
+    demo::RunThreewayComparisonOperatorDemo(5);
+
+    int someInt = 10;
+    char someChar = 'z';
+    demo::myFunction1(8, 'a');
+    demo::myFunction1(someInt, 'b');
+    demo::myFunction1(5, someChar);
+    cout << demo::addNumbers(1, 2) << endl;    //Calls the integer version
+    cout << demo::addNumbers(1.11, 2.22) << endl;    //Calls the double version   
+
 
     cin.get();
     return 0;

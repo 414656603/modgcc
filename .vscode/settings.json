@@ -1,5 +1,9 @@
 {
   "cmake.cmakePath": "D:/C++/CMake/bin/cmake.exe",
   "cmake.useCMakePresets": "always",
-  "cmake.configureOnOpen": true
+  "cmake.configureOnOpen": true,
+
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/build/ninja-gcc/compile_commands.json",
+  "C_Cpp.errorSquiggles": "Enabled",
+  "C_Cpp.intelliSenseEngine": "Default"
 }
