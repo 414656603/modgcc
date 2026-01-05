@@ -3,6 +3,8 @@
 #include <demo/test_ThreewayComparisonOperator.h>
 #include "demo/test_FunctionInvocation.h"
 #include "console_utf8.h"
+#include "demo/test_Array.h"
+#include "demo/test_Vector.h"
 
 import <iostream>;
 import <format>;
@@ -26,18 +28,36 @@ int main()
     cout << format("Number:{}",anEmployee.employeeNumber) << endl;
     cout << format("Salary:${}",anEmployee.salary) << endl;
 
-    demo::RunTestSwitch();
-    demo::RunTernaryOperatorDemo(5);
-    demo::RunThreewayComparisonOperatorDemo(5);
+    using namespace demo;
+
+    RunTestSwitch();
+    RunTernaryOperatorDemo(5);
+    RunThreewayComparisonOperatorDemo(5);
 
     int someInt = 10;
     char someChar = 'z';
-    demo::myFunction1(8, 'a');
-    demo::myFunction1(someInt, 'b');
-    demo::myFunction1(5, someChar);
-    cout << demo::addNumbers(1, 2) << endl;    //Calls the integer version
-    cout << demo::addNumbers(1.11, 2.22) << endl;    //Calls the double version   
+    myFunction1(8, 'a');
+    myFunction1(someInt, 'b');
+    myFunction1(5, someChar);
+    cout << addNumbers(1, 2) << endl;    //Calls the integer version
+    cout << addNumbers(1.11, 2.22) << endl;    //Calls the double version   
 
+    cout << "现在测试编译器警告：[[nodiscard]]属性" << endl;
+    [[nodiscard("Return value of myFunction2() should not be ignored")]] myFunction2();
+
+    cout << "现在测试编译器警告：[[maybe_unused]]属性" << endl;
+
+    cout << "现在测试编译器警告：[[noreturn]]属性" << endl;
+    bool isLicensed { isFeatureLicensed(42) };
+
+    cout << "现在测试编译器警告：[[deprecated]]属性" << endl;
+    myFunction3();
+
+    cout << "现在测试数组相关内容" << endl;
+    test_Array();
+
+    cout << "现在测试vector相关内容" << endl;
+    test_vector();
 
     cin.get();
     return 0;

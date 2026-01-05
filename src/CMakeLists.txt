@@ -4,6 +4,8 @@ add_library(demo
 	"${CMAKE_CURRENT_LIST_DIR}/demo/test_ternary_operator.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/demo/test_ThreewayComparisonOperator.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/demo/test_FunctionInvocation.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/demo/test_Array.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/demo/test_Vector.cpp"
 )
 
 set_target_properties(demo PROPERTIES CXX_SCAN_FOR_MODULES OFF)
@@ -17,3 +19,8 @@ target_compile_options(demo PRIVATE
 target_include_directories(demo PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 )
+
+# 如果这一次构建执行了预编译标准头单元动作，则 main_exe 也依赖这些动作完成。
+if(MODGCC_STD_DEPS)
+	add_dependencies(demo ${MODGCC_STD_DEPS})
+endif()

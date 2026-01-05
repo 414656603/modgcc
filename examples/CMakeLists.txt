@@ -28,3 +28,8 @@ set_source_files_properties("${EXAMPLE_MAIN_SRC}" PROPERTIES
 )
 
 add_dependencies(main_exe employee_module)
+
+# 如果这一次构建执行了预编译标准头单元动作，则 main_exe 也依赖这些动作完成。
+if(MODGCC_STD_DEPS)
+	add_dependencies(main_exe ${MODGCC_STD_DEPS})
+endif()

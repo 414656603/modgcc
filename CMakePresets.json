@@ -16,7 +16,9 @@
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_C_COMPILER": "D:/C++/mingw64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "D:/C++/mingw64/bin/g++.exe",
-        "CMAKE_MAKE_PROGRAM": "D:/C++/ninja/ninja.exe"
+        "CMAKE_MAKE_PROGRAM": "D:/C++/ninja/ninja.exe",
+        "MODGCC_SUPPRESS_SYSTEM_HEADER_WARNINGS": "ON",
+        "MODGCC_SUPPRESS_GCC_DANGLING_REFERENCE_WARNING": "ON"
       }
     },
     {

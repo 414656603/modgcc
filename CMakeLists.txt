@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(MODGCC_PRECOMPILE_STDLIB "Precompile std header-units (iostream/format) into gcm.cache and sync them to the shared CMI directory" OFF)
+option(MODGCC_SUPPRESS_SYSTEM_HEADER_WARNINGS "Suppress warnings originating from system headers (e.g. libstdc++/Windows SDK)" OFF)
+option(MODGCC_SUPPRESS_GCC_DANGLING_REFERENCE_WARNING "Suppress GCC -Wdangling-reference (often triggered in libstdc++ <format> header-units)" OFF)
 
 # 共享的 std header-unit CMI 目录（module-map 会引用这里）。
 set(MODGCC_SHARED_STD_DIR "D:/C++/gcc_prebuild_stdlib_gcm/15_2_0/D-")
@@ -41,9 +43,18 @@ set(MODGCC_COMMON_COMPILE_FLAGS
 
 set(MODGCC_WARNING_FLAGS
 	-Wall
-	#-Wextra
+	-Wextra
 	-Wimplicit-fallthrough=3
 )
+
+# 可选：抑制编译系统头文件警告
+if(MODGCC_SUPPRESS_SYSTEM_HEADER_WARNINGS)
+	list(APPEND MODGCC_WARNING_FLAGS -Wno-system-headers)
+endif()
+# 可选：抑制 GCC 悬空引用警告（libstdc++ <format> 头文件单元中常触发该警告）
+if(MODGCC_SUPPRESS_GCC_DANGLING_REFERENCE_WARNING)
+	list(APPEND MODGCC_WARNING_FLAGS -Wno-dangling-reference)
+endif()
 
 # 可选：构建时自动预编译 std header-unit（iostream/format）并同步到共享目录。
 set(MODGCC_STD_DEPS "")
@@ -64,6 +75,10 @@ if(MODGCC_PRECOMPILE_STDLIB)
 		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header format
 		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] precompile header-unit: <compare>"
 		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header compare
+		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] precompile header-unit: <array>"
+		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header array
+		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] precompile header-unit: <vector>"
+		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header vector
 		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] sync std CMI: ${GCM_CACHE_STD_DIR} -> ${SHARED_STD_DIR}"
 		COMMAND "${CMAKE_COMMAND}" -E make_directory "${SHARED_STD_DIR}"
 		COMMAND "${CMAKE_COMMAND}" -E copy_directory "${GCM_CACHE_STD_DIR}" "${SHARED_STD_DIR}"
