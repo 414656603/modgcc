@@ -79,6 +79,14 @@ if(MODGCC_PRECOMPILE_STDLIB)
 		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header array
 		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] precompile header-unit: <vector>"
 		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header vector
+		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] precompile header-unit: <optional>"
+		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header optional
+		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] precompile header-unit: <utility>"
+		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header utility
+		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] precompile header-unit: <initializer_list>"
+		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header initializer_list
+		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] precompile header-unit: <string>"
+		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header string
 		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] sync std CMI: ${GCM_CACHE_STD_DIR} -> ${SHARED_STD_DIR}"
 		COMMAND "${CMAKE_COMMAND}" -E make_directory "${SHARED_STD_DIR}"
 		COMMAND "${CMAKE_COMMAND}" -E copy_directory "${GCM_CACHE_STD_DIR}" "${SHARED_STD_DIR}"

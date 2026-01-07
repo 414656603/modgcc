@@ -6,6 +6,10 @@ add_library(demo
 	"${CMAKE_CURRENT_LIST_DIR}/demo/test_FunctionInvocation.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/demo/test_Array.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/demo/test_Vector.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/demo/test_Optional.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/demo/test_Loop.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/demo/test_InitializerList.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/demo/test_String.cpp"
 )
 
 set_target_properties(demo PROPERTIES CXX_SCAN_FOR_MODULES OFF)

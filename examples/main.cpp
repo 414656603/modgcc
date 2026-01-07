@@ -5,6 +5,10 @@
 #include "console_utf8.h"
 #include "demo/test_Array.h"
 #include "demo/test_Vector.h"
+#include "demo/test_Optional.h"
+#include "demo/test_Loop.h"
+#include "demo/test_InitializerList.h"
+#include "demo/test_String.h"
 
 import <iostream>;
 import <format>;
@@ -58,6 +62,27 @@ int main()
 
     cout << "现在测试vector相关内容" << endl;
     test_vector();
+
+    cout << "现在测试optional相关内容" << endl;
+    RunTest_Optional();
+
+    cout << "现在测试pair相关内容" << endl;
+    RunTest_Pair();
+
+    cout << "测试结构化绑定相关内容" << endl;
+    Test_StructuredBindings();
+
+    cout << "测试结构化绑定分解相关内容" << endl;
+    Test_StructuredBindings_fenjie();
+
+    cout << "现在测试各种循环语句相关内容" << endl;
+    RunTest_Loop();
+
+    cout << "现在测试initializer_list相关内容" << endl;
+    Runtest_InitializerList();
+
+    cout << "现在测试string相关内容" << endl;
+    Runtest_String();
 
     cin.get();
     return 0;

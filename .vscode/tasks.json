@@ -205,10 +205,82 @@
             }
         },
         {
+            "type": "shell",
+            "label": "预编译 <optional>",
+            "command": "D:\\C++\\mingw64\\bin\\g++.exe",
+            "dependsOn": ["预编译 <vector>"],
+            "dependsOrder": "sequence",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-x",
+                "c++-system-header",
+                "optional"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "预编译 <utility>",
+            "command": "D:\\C++\\mingw64\\bin\\g++.exe",
+            "dependsOn": ["预编译 <optional>"],
+            "dependsOrder": "sequence",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-x",
+                "c++-system-header",
+                "utility"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "预编译 <initializer_list>",
+            "command": "D:\\C++\\mingw64\\bin\\g++.exe",
+            "dependsOn": ["预编译 <utility>"],
+            "dependsOrder": "sequence",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-x",
+                "c++-system-header",
+                "initializer_list"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "预编译 <string>",
+            "command": "D:\\C++\\mingw64\\bin\\g++.exe",
+            "dependsOn": ["预编译 <initializer_list>"],
+            "dependsOrder": "sequence",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-x",
+                "c++-system-header",
+                "string"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
             "type": "process",
             "label": "拷贝 std gcm 到共享目录(显示返回码)",
             "command": "powershell.exe",
-            "dependsOn": ["预编译 <vector>"],
+            //"dependsOn": ["预编译 <string>"],
             "dependsOrder": "sequence",
             "args": [
                 "-NoProfile",
@@ -225,7 +297,7 @@
             "type": "shell",
             "label": "编译 C++20 模块项目",
             "command": "D:\\C++\\mingw64\\bin\\g++.exe",
-            "dependsOn": ["预编译 <vector>"],
+            //"dependsOn": ["预编译 <string>"],
             "dependsOrder": "sequence",
             "args": [
                 "-std=c++20",
@@ -247,6 +319,10 @@
                 "${workspaceFolder}\\src\\demo\\test_FunctionInvocation.cpp",
                 "${workspaceFolder}\\src\\demo\\test_Array.cpp",
                 "${workspaceFolder}\\src\\demo\\test_Vector.cpp",
+                "${workspaceFolder}\\src\\demo\\test_Optional.cpp",
+                "${workspaceFolder}\\src\\demo\\test_Loop.cpp",
+                "${workspaceFolder}\\src\\demo\\test_InitializerList.cpp",
+                "${workspaceFolder}\\src\\demo\\test_String.cpp",
                 "-o",
                 "${workspaceFolder}\\main.exe"
             ],

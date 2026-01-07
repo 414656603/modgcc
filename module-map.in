@@ -5,3 +5,7 @@ D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/format @MODGCC_SHAR
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/compare @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/compare.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/array @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/array.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/vector @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/vector.gcm
+D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/optional @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/optional.gcm
+D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/utility @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/utility.gcm
+D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/initializer_list @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/initializer_list.gcm
+D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/string @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/string.gcm
