@@ -277,10 +277,28 @@
             }
         },
         {
+            "type": "shell",
+            "label": "预编译 <memory>",
+            "command": "D:\\C++\\mingw64\\bin\\g++.exe",
+            "dependsOn": ["预编译 <string>"],
+            "dependsOrder": "sequence",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-x",
+                "c++-system-header",
+                "memory"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
             "type": "process",
             "label": "拷贝 std gcm 到共享目录(显示返回码)",
             "command": "powershell.exe",
-            //"dependsOn": ["预编译 <string>"],
+            //"dependsOn": ["预编译 <memory>"],
             "dependsOrder": "sequence",
             "args": [
                 "-NoProfile",
@@ -297,7 +315,7 @@
             "type": "shell",
             "label": "编译 C++20 模块项目",
             "command": "D:\\C++\\mingw64\\bin\\g++.exe",
-            //"dependsOn": ["预编译 <string>"],
+            //"dependsOn": ["预编译 <memory>"],
             "dependsOrder": "sequence",
             "args": [
                 "-std=c++20",
@@ -311,7 +329,9 @@
                 "${workspaceFolder}\\src",
                 "-fmodule-mapper=module-map",
                 "${workspaceFolder}\\mymodules\\employee.cppm",
+                "${workspaceFolder}\\mymodules\\airline_ticket.cppm",
                 "${workspaceFolder}\\examples\\main.cpp",
+                "${workspaceFolder}\\src\\myclasssrc\\airline_ticket.cpp",
                 "${workspaceFolder}\\src\\console_utf8.cpp",
                 "${workspaceFolder}\\src\\demo\\test_switch.cpp",
                 "${workspaceFolder}\\src\\demo\\test_ternary_operator.cpp",
