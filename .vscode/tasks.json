@@ -331,6 +331,7 @@
                 "${workspaceFolder}\\mymodules\\employee.cppm",
                 "${workspaceFolder}\\mymodules\\airline_ticket.cppm",
                 "${workspaceFolder}\\examples\\main.cpp",
+                "${workspaceFolder}\\src\\demo\\testAll_Demos.cpp",
                 "${workspaceFolder}\\src\\myclasssrc\\airline_ticket.cpp",
                 "${workspaceFolder}\\src\\console_utf8.cpp",
                 "${workspaceFolder}\\src\\demo\\test_switch.cpp",

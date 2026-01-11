@@ -25,7 +25,7 @@ AirlineTicket::~AirlineTicket()
     //destructor body if needed
 }
 
-double AirlineTicket::calculatePriceInDollars()
+double AirlineTicket::calculatePriceInDollars() const
 {
     if (hasEliteSuperRewardsStatus()) {
         //Elite Super Rewards members fly for free!
@@ -36,12 +36,12 @@ double AirlineTicket::calculatePriceInDollars()
     return getNumberOfMiles() * 0.1;
 }
 
-std::string AirlineTicket::getPassengerName() { return m_passengerName; }
+std::string AirlineTicket::getPassengerName() const { return m_passengerName; }
 void AirlineTicket::setPassengerName(std::string name) { m_passengerName = name; }
 
-int AirlineTicket::getNumberOfMiles() { return m_numberOfMiles; }
+int AirlineTicket::getNumberOfMiles() const { return m_numberOfMiles; }
 void AirlineTicket::setNumberOfMiles(int miles) { m_numberOfMiles = miles; }
 
-bool AirlineTicket::hasEliteSuperRewardsStatus() { return m_hasEliteSuperRewardsStatus; }
+bool AirlineTicket::hasEliteSuperRewardsStatus() const { return m_hasEliteSuperRewardsStatus; }
 void AirlineTicket::setEliteSuperRewardsStatus(bool status) { m_hasEliteSuperRewardsStatus = status; }
 //other get and set methods have a similar implementation

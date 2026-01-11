@@ -8,15 +8,15 @@ export class AirlineTicket
 		AirlineTicket();
 		~AirlineTicket();
 
-        double calculatePriceInDollars();
+        double calculatePriceInDollars() const;
 
-        std::string getPassengerName();
+        std::string getPassengerName() const;
         void setPassengerName(std::string name);
 
-        int getNumberOfMiles();
+        int getNumberOfMiles() const;
         void setNumberOfMiles(int miles);
 
-        bool hasEliteSuperRewardsStatus();
+        bool hasEliteSuperRewardsStatus() const;
         void setEliteSuperRewardsStatus(bool status);
 
     private:
