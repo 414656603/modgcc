@@ -14,3 +14,4 @@ D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/utility @MODGCC_SHA
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/initializer_list @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/initializer_list.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/string @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/string.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/memory @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/memory.gcm
+D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/stdexcept @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/stdexcept.gcm

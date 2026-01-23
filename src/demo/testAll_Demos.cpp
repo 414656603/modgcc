@@ -11,12 +11,16 @@
 #include "demo/test_Loop.h"
 #include "demo/test_InitializerList.h"
 #include "demo/test_String.h"
+#include "demo/test_Reference.h"
 
 
 import <iostream>;
+import <vector>;
 import <format>;
 import <optional>;
 import <memory>;
+import <utility>;
+import <stdexcept>;
 import employee;
 import airline_ticket;
 
@@ -58,6 +62,42 @@ using namespace std;
     };
     constexpr double inchToMm(double inch) { return inch * 25.4; }
     consteval double inchToMm_consteval(double inch) { return inch * 25.4; }
+
+    // 测试：const_cast************************************************
+    void ThirdPartyFunction(char* str)
+    {
+        // 假设这是一个第三方库函数，接受 char* 参数
+        cout << "ThirdPartyFunction received:  char* 参数"  << endl;
+    }
+
+    void myfunction_receive_const(const char* str)
+    {
+        // 使用 const_cast 移除 const 限定符
+
+        ThirdPartyFunction(const_cast<char*>(str));
+    }
+
+
+    // 测试：异常************************************************
+    double divideNumbers(double numerator, double denominator)
+    {
+        if (denominator == 0)
+        {
+            throw invalid_argument("Denominator cannot be zero.");
+        }
+        return numerator / denominator;
+    }
+
+
+    // 测试：类型别名************************************************
+    void processVector(const vector<basic_string<char>>& vec) { }
+    void processVector_alias(const vector<string>& vec) { }
+
+
+    // 测试：类型判断************************************************
+    const string message_testauto = "Testing auto type deduction";
+    const string& foo_testauto() { return message_testauto; }
+
 
 
 int RunTestAllDemos()
@@ -377,10 +417,113 @@ int RunTestAllDemos()
     //double mm4 = inchToMm_consteval(dynamic_inch);       // 第二个调用现在会导致编译错误，因为无法在编译期对其进行求值。
 
 
+    cout << "测试【引用】：" << endl;
+    Runtest_Reference();
+
+    
+    cout << "测试【const_cast】类型转换" << endl;
+    const char* myConstString = "Hello, World!";
+    myfunction_receive_const(myConstString);
+
+    //或者使用标准库的as_const()函数：
+    const char* anotherConstString = "Goodbye, World!";
+    myfunction_receive_const(as_const(anotherConstString));
+
+    string normal_str {"C++"};
+    const string& const_ref_str { as_const(normal_str) }; //指向const的引用
+    
+
+    cout << "测试【异常】" << endl;
+    try {
+        cout << divideNumbers(10, 2) << endl; // 正常情况
+        cout << divideNumbers(10, 0) << endl; // 触发异常
+        cout << divideNumbers(40, 2) << endl; // 正常情况
+    } catch (const invalid_argument& exception) {
+        cout << "Caught an exception: " << exception.what() << endl;
+    }
 
 
+    cout << "测试【类型别名】" << endl;
+    using InPtr = int*; // 使用 using 创建类型别名
+    InPtr pValue;      // 等同于 int* pValue;
+    int* anotherIntPtr;
+    pValue = anotherIntPtr;
+
+    vector<basic_string<char>> vec1;
+    processVector(vec1);
+    vector<string> vec2;
+    processVector_alias(vec2);
+
+    using InPtr_alias = int*; // 使用 using 创建类型别名
+    typedef int* InPtr_typedef; // 使用 typedef 创建类型别名
+    InPtr_alias pValue2;      // 等同于 int* pValue2;
+    InPtr_typedef pValue3;    // 等同于 int* pValue3cc
+
+    
+    cout << "测试【类型判断】" << endl;
+    auto x_int { 123 };       // x_int 是 int 类型
+
+    //const string& foo_testauto() { return message_testauto; }
+    auto f1_testauto { foo_testauto() } ; // f1_testauto 是 const string 类型
+    const auto& f2_testauto { foo_testauto() } ; // f2_testauto 是 const string& 类型
+    cout << "f1_testauto: " << f1_testauto << endl;
+    cout << "f2_testauto: " << f2_testauto << endl;
+
+
+    string str_testasconst { "C++" };
+    auto result { as_const(str_testasconst) }; // result是string 类型.
+    //本章前面介绍了  工具函数 as_const()  ，它返回  其引用参数 的  const引用  版本。
+    //将  as_const()  与  auto  结合使用时要小心。
+    //由于自动去除  引用  和  const限定符  ，因此以下结果变量的类型为  sting  ，而不是  const string&类型  ，因此将进行复制：
+
+    int i_testauto_ptr {123};
+    auto p_testauto_ptr { &i_testauto_ptr }; // p_testauto_ptr 是 int* 类型.
+    auto* p_testauto_ptr2 { &i_testauto_ptr }; // p_testauto_ptr2 是 int* 类型.
+
+
+    //此外，使用  auto*  代替  auto  确实可以解决将  auto  、  const  、  指针    一起使用时的奇怪行为  。假设你编写以下内容：
+    const auto p_testauto_ptr3 { &i_testauto_ptr }; // p_testauto_ptr3 【不是 const int* 类型】【是 int* const】.
+    //因此它是：指向  非const整数  的  const指针  。
+    //按如下所示，将  const  放在  auto  后面 无济于事，类型仍然是：  int* const  。
+    auto const p_testauto_ptr4 { &i_testauto_ptr }; // p_testauto_ptr4 【不是 const int* 类型】【是 int* const】.
+
+     //当将  auto*  与  const  结合使用时，它的行为就会与期望的一样。这是一个例子：现在p3的类型为：  const int*  。
+    const auto* p3_testauto_ptr { &i_testauto_ptr }; // p_testauto_ptr5 是 const int* 类型.
+    //如果你真的需要一个  const的  指针  而不是  const的  整数  ，需要将  const  放在后边：
+    auto* const p4_testauto_ptr { &i_testauto_ptr }; // p_testauto_ptr6 是 int* const 类型.
+    //最后，使用这个语法可以令  指针  和  整数  都是：  const  。
+    const auto* const p5_testauto_ptr { &i_testauto_ptr }; // p_testauto_ptr7 是 const int* const 类型.
+
+
+    cout << "测试拷贝列表初始化、直接列表初始化" << endl;
+    // Copy list initialization
+    auto a_testlist_init = {11}; // a_testlist_init 是 std::initializer_list<int> 类型
+    auto b_testlist_init = {11, 22, 33}; // b_testlist_init 是 std::initializer_list<int> 类型
+    cout << "b_testlist_init contains: ";
+    for (const auto& value : b_testlist_init) {
+        cout << value << " ";
+    }
+    cout << endl;
+
+    // Direct list initialization
+    auto c_testlist_init{11}; // c_testlist_init 是 int 类型
+    //auto d_testlist_init{11, 22, 33}; // 编译错误：无法使用直接列表初始化来初始化多个值
+
+
+    cout << "测试decltype()" << endl;
+    int x_decltype {123};
+    decltype(x_decltype) y_decltype = 456; // y_decltype 是 int 类型
+    cout << "y_decltype: " << y_decltype << endl;
+    /*
+      auto  与  decltype  的区别在于：  decltype  未去除  引用  和  const限定符  。
+        再来分析返回  const string 引用  的foo()函数。
+        按如下方式使用decltype定义z_decltype，导致z_decltype的类型为const string&，从而不生成副本。
+    */
+    decltype(foo_testauto()) z_decltype {foo_testauto()}; // z_decltype 是 const string& 类型},不生成副本（拷贝）。
 
 
     cin.get();
     return 0;
 }
+
+void nothingend() { }

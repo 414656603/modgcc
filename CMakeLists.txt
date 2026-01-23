@@ -89,6 +89,9 @@ if(MODGCC_PRECOMPILE_STDLIB)
 		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header string
 		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] precompile header-unit: <memory>"
 		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header memory
+		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] precompile header-unit: <stdexcept>"
+		COMMAND "${CMAKE_CXX_COMPILER}" -std=c++20 -fmodules-ts -fdiagnostics-color=always -x c++-system-header stdexcept
+		# 同步到共享目录
 		COMMAND "${CMAKE_COMMAND}" -E echo "[modgcc] sync std CMI: ${GCM_CACHE_STD_DIR} -> ${SHARED_STD_DIR}"
 		COMMAND "${CMAKE_COMMAND}" -E make_directory "${SHARED_STD_DIR}"
 		COMMAND "${CMAKE_COMMAND}" -E copy_directory "${GCM_CACHE_STD_DIR}" "${SHARED_STD_DIR}"

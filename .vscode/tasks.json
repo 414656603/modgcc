@@ -295,10 +295,28 @@
             }
         },
         {
+            "type": "shell",
+            "label": "预编译 <stdexcept>",
+            "command": "D:\\C++\\mingw64\\bin\\g++.exe",
+            "dependsOn": ["预编译 <memory>"],
+            "dependsOrder": "sequence",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-x",
+                "c++-system-header",
+                "stdexcept"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
             "type": "process",
             "label": "拷贝 std gcm 到共享目录(显示返回码)",
             "command": "powershell.exe",
-            //"dependsOn": ["预编译 <memory>"],
+            //"dependsOn": ["预编译 <stdexcept>"],
             "dependsOrder": "sequence",
             "args": [
                 "-NoProfile",
@@ -315,7 +333,7 @@
             "type": "shell",
             "label": "编译 C++20 模块项目",
             "command": "D:\\C++\\mingw64\\bin\\g++.exe",
-            //"dependsOn": ["预编译 <memory>"],
+            //"dependsOn": ["预编译 <stdexcept>"],
             "dependsOrder": "sequence",
             "args": [
                 "-std=c++20",
@@ -344,6 +362,7 @@
                 "${workspaceFolder}\\src\\demo\\test_Loop.cpp",
                 "${workspaceFolder}\\src\\demo\\test_InitializerList.cpp",
                 "${workspaceFolder}\\src\\demo\\test_String.cpp",
+                "${workspaceFolder}\\src\\demo\\test_Reference.cpp",
                 "-o",
                 "${workspaceFolder}\\main.exe"
             ],

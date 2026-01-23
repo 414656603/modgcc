@@ -11,6 +11,13 @@ add_library(demo
 	"${CMAKE_CURRENT_LIST_DIR}/demo/test_InitializerList.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/demo/test_String.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/demo/testAll_Demos.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/demo/test_Reference.cpp"
+)
+
+# 关键：demo/testAll_Demos.cpp 内会 `import employee; import airline_ticket;`
+# 需要确保对应 CMI 已生成，否则 Ninja 并行时可能先编译该 TU，导致 "imports must be built before being imported"。
+set_source_files_properties("${CMAKE_CURRENT_LIST_DIR}/demo/testAll_Demos.cpp" PROPERTIES
+	OBJECT_DEPENDS "${MODGCC_MODULE_CMIS};${MODGCC_MODULE_MAP_FILE}"
 )
 
 set_target_properties(demo PROPERTIES CXX_SCAN_FOR_MODULES OFF)
