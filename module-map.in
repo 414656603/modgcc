@@ -4,6 +4,7 @@ $root @MODGCC_SHARED_STD_DIR@/..
 # 其中 <module-name> 必须与 `export module <module-name>;` 一致。
 employee @CMAKE_BINARY_DIR@/gcm.cache/employee.gcm
 airline_ticket @CMAKE_BINARY_DIR@/gcm.cache/airline_ticket.gcm
+database @CMAKE_BINARY_DIR@/gcm.cache/database.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/iostream @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/iostream.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/format @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/format.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/compare @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/compare.gcm
@@ -15,3 +16,4 @@ D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/initializer_list @M
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/string @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/string.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/memory @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/memory.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/stdexcept @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/stdexcept.gcm
+D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/exception @MODGCC_SHARED_STD_DIR@/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/exception.gcm

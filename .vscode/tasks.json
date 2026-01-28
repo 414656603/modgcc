@@ -313,10 +313,28 @@
             }
         },
         {
+            "type": "shell",
+            "label": "预编译 <exception>",
+            "command": "D:\\C++\\mingw64\\bin\\g++.exe",
+            "dependsOn": ["预编译 <stdexcept>"],
+            "dependsOrder": "sequence",
+            "args": [
+                "-std=c++20",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-x",
+                "c++-system-header",
+                "exception"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
             "type": "process",
             "label": "拷贝 std gcm 到共享目录(显示返回码)",
             "command": "powershell.exe",
-            //"dependsOn": ["预编译 <stdexcept>"],
+            //"dependsOn": ["预编译 <exception>"],
             "dependsOrder": "sequence",
             "args": [
                 "-NoProfile",
@@ -333,7 +351,7 @@
             "type": "shell",
             "label": "编译 C++20 模块项目",
             "command": "D:\\C++\\mingw64\\bin\\g++.exe",
-            //"dependsOn": ["预编译 <stdexcept>"],
+            //"dependsOn": ["预编译 <exception>"],
             "dependsOrder": "sequence",
             "args": [
                 "-std=c++20",
@@ -347,10 +365,16 @@
                 "${workspaceFolder}\\src",
                 "-fmodule-mapper=module-map",
                 "${workspaceFolder}\\mymodules\\employee.cppm",
+                "${workspaceFolder}\\mymodules\\database.cppm",
                 "${workspaceFolder}\\mymodules\\airline_ticket.cppm",
                 "${workspaceFolder}\\examples\\main.cpp",
                 "${workspaceFolder}\\src\\demo\\testAll_Demos.cpp",
+                "${workspaceFolder}\\src\\demo\\test_Employee.cpp",
+                "${workspaceFolder}\\src\\demo\\test_Database.cpp",
+                "${workspaceFolder}\\src\\demo\\test_UserUI_Console.cpp",
                 "${workspaceFolder}\\src\\myclasssrc\\airline_ticket.cpp",
+                "${workspaceFolder}\\src\\myclasssrc\\Employee.cpp",
+                "${workspaceFolder}\\src\\myclasssrc\\Database.cpp",
                 "${workspaceFolder}\\src\\console_utf8.cpp",
                 "${workspaceFolder}\\src\\demo\\test_switch.cpp",
                 "${workspaceFolder}\\src\\demo\\test_ternary_operator.cpp",

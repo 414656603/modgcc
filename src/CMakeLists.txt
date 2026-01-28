@@ -12,11 +12,24 @@ add_library(demo
 	"${CMAKE_CURRENT_LIST_DIR}/demo/test_String.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/demo/testAll_Demos.cpp"
 	"${CMAKE_CURRENT_LIST_DIR}/demo/test_Reference.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/demo/test_Employee.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/demo/test_Database.cpp"
+	"${CMAKE_CURRENT_LIST_DIR}/demo/test_UserUI_Console.cpp"
 )
 
 # 关键：demo/testAll_Demos.cpp 内会 `import employee; import airline_ticket;`
 # 需要确保对应 CMI 已生成，否则 Ninja 并行时可能先编译该 TU，导致 "imports must be built before being imported"。
 set_source_files_properties("${CMAKE_CURRENT_LIST_DIR}/demo/testAll_Demos.cpp" PROPERTIES
+	OBJECT_DEPENDS "${MODGCC_MODULE_CMIS};${MODGCC_MODULE_MAP_FILE}"
+)
+
+# test_Employee.cpp 也直接 `import employee;`，需要确保对应 CMI 已生成。
+set_source_files_properties("${CMAKE_CURRENT_LIST_DIR}/demo/test_Employee.cpp" PROPERTIES
+    OBJECT_DEPENDS "${MODGCC_MODULE_CMIS};${MODGCC_MODULE_MAP_FILE}"
+)
+
+# test_Database.cpp 直接 `import database;`，也需要确保对应 CMI 已生成。
+set_source_files_properties("${CMAKE_CURRENT_LIST_DIR}/demo/test_Database.cpp" PROPERTIES
 	OBJECT_DEPENDS "${MODGCC_MODULE_CMIS};${MODGCC_MODULE_MAP_FILE}"
 )
 
@@ -36,3 +49,6 @@ target_include_directories(demo PUBLIC
 if(MODGCC_STD_DEPS)
 	add_dependencies(demo ${MODGCC_STD_DEPS})
 endif()
+
+# 确保 demo 目标在链接/构建阶段也依赖模块生成目标（避免并行问题）。
+add_dependencies(demo ${MODGCC_MODULE_TARGETS})

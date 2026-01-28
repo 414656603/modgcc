@@ -51,6 +51,20 @@ modgcc_target_add_module_impl_unit(
 	"${CMAKE_SOURCE_DIR}/src/myclasssrc/airline_ticket.cpp"
 )
 
+# 模块 employee 的实现单元（接口/实现分离）。
+modgcc_target_add_module_impl_unit(
+    main_exe
+    employee_impl
+    "${CMAKE_SOURCE_DIR}/src/myclasssrc/Employee.cpp"
+)
+
+# 模块 database 的实现单元（接口/实现分离）。
+modgcc_target_add_module_impl_unit(
+	main_exe
+	database_impl
+	"${CMAKE_SOURCE_DIR}/src/myclasssrc/Database.cpp"
+)
+
 set_target_properties(main_exe PROPERTIES CXX_SCAN_FOR_MODULES OFF)
 
 target_compile_options(main_exe PRIVATE

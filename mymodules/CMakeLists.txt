@@ -50,6 +50,10 @@ endmacro()
 # 3) 在此处增加：modgcc_add_module(xxx "${SRC_ROOT}/mymodules/xxx.cppm")
 modgcc_add_module(employee "${SRC_ROOT}/mymodules/employee.cppm")
 modgcc_add_module(airline_ticket "${SRC_ROOT}/mymodules/airline_ticket.cppm")
+modgcc_add_module(database "${SRC_ROOT}/mymodules/database.cppm")
+
+# database 模块依赖 employee，确保 employee.gcm 先生成
+add_dependencies(database_module employee_module)
 
 # 导出给父级（根 CMakeLists.txt），examples/ 会用这些变量：
 # - MODGCC_MODULE_OBJS：需要链接进可执行文件的模块对象文件

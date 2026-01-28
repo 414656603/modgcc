@@ -3,8 +3,9 @@
 $root D:/C++/gcc_prebuild_stdlib_gcm/15_2_0/D-/..
 
 # 工程自定义模块映射：`<module-name> <absolute-path-to-cmi>`
-employee D:/C++/MyPJ/modgcc_branch_maprelcmake_workn/gcm.cache/employee.gcm
-airline_ticket D:/C++/MyPJ/modgcc_branch_maprelcmake_workn/gcm.cache/airline_ticket.gcm
+employee D:/C++/MyPJ/modgcc_branch_maprelcmake_workn/wt_featureB/gcm.cache/employee.gcm
+airline_ticket D:/C++/MyPJ/modgcc_branch_maprelcmake_workn/wt_featureB/gcm.cache/airline_ticket.gcm
+database D:/C++/MyPJ/modgcc_branch_maprelcmake_workn/wt_featureB/gcm.cache/database.gcm
 
 # 标准库 header-unit 映射：`<header-absolute-path> <absolute-path-to-gcm>`
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/iostream D:/C++/gcc_prebuild_stdlib_gcm/15_2_0/D-/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/iostream.gcm
@@ -18,3 +19,4 @@ D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/initializer_list D:
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/string D:/C++/gcc_prebuild_stdlib_gcm/15_2_0/D-/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/string.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/memory D:/C++/gcc_prebuild_stdlib_gcm/15_2_0/D-/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/memory.gcm
 D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/stdexcept D:/C++/gcc_prebuild_stdlib_gcm/15_2_0/D-/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/stdexcept.gcm
+D:/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/exception D:/C++/gcc_prebuild_stdlib_gcm/15_2_0/D-/C++/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/c++/exception.gcm

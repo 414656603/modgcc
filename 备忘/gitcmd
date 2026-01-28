@@ -146,3 +146,55 @@ git rev-parse --show-toplevel
 # 查看远端地址
 git remote -v
 
+
+
+
+
+User: 我要根据当前情况，在wt_featureB这个工作树上建一个分支，分支命名为modgcc_branch_maprelcmake_work1，需要执行那些git命令？
+
+GitHub Copilot: 在 wt_featureB 这个 worktree 里“就地”新建并切到分支 `modgcc_branch_maprelcmake_work1`，通常只要这些 git 命令（按顺序执行）：
+
+git worktree list
+
+```powershell
+cd D:\C++\MyPJ\modgcc_branch_maprelcmake_workn\wt_featureB
+git status
+git worktree list
+git switch -c map_cmake_realcmake_workn_1employee
+```
+
+可选/常见补充：
+- 如果分支其实已存在（本地已有）：  
+  ```powershell
+  git switch modgcc_branch_maprelcmake_work1
+  ```
+- 如果你还要把新分支推到远端并建立上游跟踪：  
+  ```powershell
+  git push -u origin map_cmake_realcmake_workn_1employee
+  ```
+
+清理工作树：
+cd D:\C++\MyPJ\modgcc_branch_maprelcmake_workn
+git worktree remove wt_featureB --force
+git worktree prune
+建树：
+git worktree add wt_featureB featureB
+
+
+
+查看远端分支：
+查看远端所有分支，常用这几条：
+先更新远端引用（推荐先做一次）：git fetch --all --prune
+列出所有远端分支：git branch -r
+同时列出本地+远端：git branch -a
+看“远端分支 + 最后提交信息”（更好用）：git branch -r -vv
+
+如果你想直接看某个远端（比如 origin）上“服务器端”的分支列表（不依赖本地是否 fetch 过）：
+git ls-remote --heads origin
+
+
+
+更新头：
+git reset --hard e04306638914b7522ac1b7e44a9015847c9c2c0e
+
+

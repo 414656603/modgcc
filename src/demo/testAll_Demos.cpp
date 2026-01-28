@@ -1,4 +1,4 @@
-#include "demo/testAll_Demos.h"
+#include "demo/testAll.h"
 
 #include <demo/test_switch.h>
 #include <demo/test_ternary_operator.h>
@@ -106,7 +106,7 @@ int RunTestAllDemos()
     demo::InitConsoleUtf8();
 
     //Create and populate an employee.
-    Employee anEmployee;
+    SimpleEmployee::Employee anEmployee;
     anEmployee.firstInitial='J';
     anEmployee.lastInitial='D';
     anEmployee.employeeNumber = 42;
@@ -280,14 +280,14 @@ int RunTestAllDemos()
 
     //测试【指派初始化器】
     cout << "测试指派初始化器" << endl;
-    Employee empolyee1 = {'J', 'D', 42, 80000};   //传统初始化写法，统一初始化语法。
-    Employee employee2{         //使用 【指派初始化器】
+    SimpleEmployee::Employee empolyee1 = {'J', 'D', 42, 80000};   //传统初始化写法，统一初始化语法。
+    SimpleEmployee::Employee employee2{         //使用 【指派初始化器】
         .firstInitial = 'J',
         .lastInitial = 'D',
         .employeeNumber = 42,
         .salary = 80000
     };
-    Employee employee3{         //使用 【指派初始化器】，跳过 employeeNumber。
+    SimpleEmployee::Employee employee3{         //使用 【指派初始化器】，跳过 employeeNumber。
         .firstInitial = 'J',
         .lastInitial = 'D',
         .salary = 80000
@@ -309,7 +309,7 @@ int RunTestAllDemos()
     myintegerPointer = nullptr; //释放后，置空指针，避免悬空指针。
     if (myintegerPointer == nullptr ) { cout << "指针置空后，等于nullptr" << endl; }
 
-    Employee* employeePointer { &anEmployee }; //指向栈上对象的指针
+    SimpleEmployee::Employee* employeePointer { &anEmployee }; //指向栈上对象的指针
     cout << format("通过指针访问Employee:{}",(*employeePointer).employeeNumber) << endl;
     cout << format("通过指针访问Employee:{}",employeePointer->employeeNumber) << endl;
 
